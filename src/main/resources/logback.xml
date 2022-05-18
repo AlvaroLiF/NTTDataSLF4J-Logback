@@ -1,0 +1,40 @@
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+
+	<!-- VARIABLE ASOCIADA A LA FECHA -->
+	<timestamp key="logDateVar" datePattern="EEEE-dd-'de'-MMMM-'de'-yyyy-'a-las-'HH-mm-ss" />
+	
+	<!-- ROLLINGFILEAPPENDER -->
+	<appender name="TuberiaTallerPracticoLogback"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		
+		<!-- Nombre del fichero donde desemboca la información de la tubería -->
+		<file>C://dev//logs//logAlvaroLF-${logDateVar}.log</file>
+		
+		<!-- Política con la gestión del fichero -->
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>C://dev//logs//logAlvaroLF-${logDateVar}.%i.zip</fileNamePattern>
+			
+			<!-- Número mínimo y máximo en el que separar los ficheros -->
+			<minIndex>1</minIndex>
+			<maxIndex>3</maxIndex>
+		</rollingPolicy>
+
+		<!-- Tamaño máximo del archivo a partir del cual se puede trocear -->
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>50KB</maxFileSize>
+		</triggeringPolicy>
+		
+		<!-- Información sobre como se pinta la traza -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Nivel de información que pasa por la tubería -->
+	<root level="debug">
+		<appender-ref ref="TuberiaTallerPracticoLogback" />
+	</root>
+
+</configuration>
